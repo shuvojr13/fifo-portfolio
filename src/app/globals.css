@@ -1,26 +1,324 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Indigo Harbor design tokens (from DESIGN.md) ── */
+@theme inline {
+  /* Surfaces */
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+  --color-surface-tint: var(--surface-tint);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+
+  /* Brand */
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-inverse-primary: var(--inverse-primary);
+  --color-primary-fixed: var(--primary-fixed);
+  --color-primary-fixed-dim: var(--primary-fixed-dim);
+  --color-on-primary-fixed: var(--on-primary-fixed);
+  --color-on-primary-fixed-variant: var(--on-primary-fixed-variant);
+
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-secondary-fixed: var(--secondary-fixed);
+  --color-secondary-fixed-dim: var(--secondary-fixed-dim);
+  --color-on-secondary-fixed: var(--on-secondary-fixed);
+  --color-on-secondary-fixed-variant: var(--on-secondary-fixed-variant);
+
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+  --color-tertiary-fixed: var(--tertiary-fixed);
+  --color-tertiary-fixed-dim: var(--tertiary-fixed-dim);
+  --color-on-tertiary-fixed: var(--on-tertiary-fixed);
+  --color-on-tertiary-fixed-variant: var(--on-tertiary-fixed-variant);
+
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+
+  /* shadcn semantic aliases */
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Typography — Inter */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display-lg: 3rem;
+  --text-display-lg--line-height: 1.15;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-lg--font-weight: 700;
+
+  --text-headline-lg: 2rem;
+  --text-headline-lg--line-height: 1.25;
+  --text-headline-lg--letter-spacing: -0.02em;
+  --text-headline-lg--font-weight: 700;
+
+  --text-headline-lg-mobile: 1.5rem;
+  --text-headline-lg-mobile--line-height: 1.3;
+  --text-headline-lg-mobile--letter-spacing: -0.015em;
+  --text-headline-lg-mobile--font-weight: 700;
+
+  --text-headline-md: 1.25rem;
+  --text-headline-md--line-height: 1.4;
+  --text-headline-md--letter-spacing: -0.01em;
+  --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 1rem;
+  --text-body-lg--line-height: 1.5;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 0.875rem;
+  --text-body-md--line-height: 1.5;
+  --text-body-md--font-weight: 400;
+
+  --text-label-md: 0.875rem;
+  --text-label-md--line-height: 1.25;
+  --text-label-md--font-weight: 500;
+
+  --text-label-sm: 0.75rem;
+  --text-label-sm--line-height: 1.25;
+  --text-label-sm--letter-spacing: 0.01em;
+  --text-label-sm--font-weight: 500;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 400;
+
+  /* Spacing scale */
+  --spacing-gutter: 1rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-margin: 1rem;
+  --spacing-margin-desktop: 2rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+
+  /* Radii (DESIGN.md) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 1.75rem;
+  --radius-4xl: 2rem;
+  --radius: 0.5rem;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Indigo Harbor raw values */
+  --surface: #f7f9fb;
+  --surface-dim: #d8dadc;
+  --surface-bright: #f7f9fb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f4f6;
+  --surface-container: #eceef0;
+  --surface-container-high: #e6e8ea;
+  --surface-container-highest: #e0e3e5;
+  --surface-variant: #e0e3e5;
+  --surface-tint: #4059aa;
+  --on-surface: #191c1e;
+  --on-surface-variant: #444651;
+  --inverse-surface: #2d3133;
+  --inverse-on-surface: #eff1f3;
+
+  --primary: #00236f;
+  --on-primary: #ffffff;
+  --primary-container: #1e3a8a;
+  --on-primary-container: #90a8ff;
+  --inverse-primary: #b6c4ff;
+  --primary-fixed: #dce1ff;
+  --primary-fixed-dim: #b6c4ff;
+  --on-primary-fixed: #00164e;
+  --on-primary-fixed-variant: #264191;
+
+  --secondary: #565e74;
+  --on-secondary: #ffffff;
+  --secondary-container: #dae2fd;
+  --on-secondary-container: #5c647a;
+  --secondary-fixed: #dae2fd;
+  --secondary-fixed-dim: #bec6e0;
+  --on-secondary-fixed: #131b2e;
+  --on-secondary-fixed-variant: #3f465c;
+
+  --tertiary: #5d0005;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #84080f;
+  --on-tertiary-container: #ff8a80;
+  --tertiary-fixed: #ffdad6;
+  --tertiary-fixed-dim: #ffb4ac;
+  --on-tertiary-fixed: #410002;
+  --on-tertiary-fixed-variant: #8e1214;
+
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --outline: #757682;
+  --outline-variant: #c5c5d3;
+  --background: #f7f9fb;
+  --on-background: #191c1e;
+
+  /* shadcn mappings → Indigo Harbor */
+  --foreground: #191c1e;
+  --card: #ffffff;
+  --card-foreground: #191c1e;
+  --popover: #ffffff;
+  --popover-foreground: #191c1e;
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #ffffff;
+  --muted: #f2f4f6;
+  --muted-foreground: #444651;
+  --accent: #eceef0;
+  --accent-foreground: #191c1e;
+  --destructive: #ba1a1a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1e3a8a;
+  --chart-1: #1e3a8a;
+  --chart-2: #4059aa;
+  --chart-3: #565e74;
+  --chart-4: #90a8ff;
+  --chart-5: #b6c4ff;
+  --sidebar: #f7f9fb;
+  --sidebar-foreground: #191c1e;
+  --sidebar-primary: #1e3a8a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eceef0;
+  --sidebar-accent-foreground: #191c1e;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #1e3a8a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --surface: #191c1e;
+  --surface-dim: #111314;
+  --surface-bright: #2d3133;
+  --surface-container-lowest: #111314;
+  --surface-container-low: #1d2022;
+  --surface-container: #222628;
+  --surface-container-high: #2d3133;
+  --surface-container-highest: #383c3e;
+  --surface-variant: #444651;
+  --on-surface: #e0e3e5;
+  --on-surface-variant: #c5c5d3;
+  --inverse-surface: #e0e3e5;
+  --inverse-on-surface: #2d3133;
+
+  --primary: #b6c4ff;
+  --on-primary: #00164e;
+  --primary-container: #4059aa;
+  --on-primary-container: #dce1ff;
+  --inverse-primary: #4059aa;
+
+  --secondary: #bec6e0;
+  --on-secondary: #283044;
+  --secondary-container: #3f465c;
+  --on-secondary-container: #dae2fd;
+
+  --background: #191c1e;
+  --on-background: #e0e3e5;
+  --foreground: #e0e3e5;
+  --card: #222628;
+  --card-foreground: #e0e3e5;
+  --popover: #222628;
+  --popover-foreground: #e0e3e5;
+  --primary-foreground: #00164e;
+  --secondary-foreground: #283044;
+  --muted: #2d3133;
+  --muted-foreground: #c5c5d3;
+  --accent: #2d3133;
+  --accent-foreground: #e0e3e5;
+  --destructive: #ffb4ac;
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 15%);
+  --ring: #b6c4ff;
+  --sidebar: #1d2022;
+  --sidebar-foreground: #e0e3e5;
+  --sidebar-primary: #b6c4ff;
+  --sidebar-primary-foreground: #00164e;
+  --sidebar-accent: #2d3133;
+  --sidebar-accent-foreground: #e0e3e5;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: #b6c4ff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  html {
+    @apply font-sans;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    @apply bg-surface text-body-md text-on-surface antialiased;
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    @apply bg-secondary-container text-on-secondary-fixed;
+  }
 }
